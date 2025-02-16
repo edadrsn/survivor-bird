@@ -22,7 +22,7 @@ public class SurvivorBird extends ApplicationAdapter {
         batch = new SpriteBatch();
         background = new Texture("background.png");
         bird = new Texture("bird.png");
-        birdX = Gdx.graphics.getWidth() / 2 - bird.getHeight() / 2;
+        birdX = Gdx.graphics.getWidth() / 3 - bird.getHeight() / 2;
         birdY = Gdx.graphics.getHeight() / 3;
 
     }
@@ -31,28 +31,26 @@ public class SurvivorBird extends ApplicationAdapter {
     @Override
     public void render() {
 
-        if (Gdx.input.justTouched()) {
-            gameState = 1;
-        }
 
-        if (gameState == 1) {
-            if (birdY > 0 || velocity < 0) {
-                velocity += gravity;
-                birdY -= velocity;
-            }
-        }
-        else {
-            if (Gdx.input.justTouched()) {
-                gameState = 1;
-            }
-        }
+           if(gameState==1) {
+               if (Gdx.input.justTouched()) {
+                   velocity = -10;
+               }
+
+               if(birdY>0 || velocity<0){
+                   velocity+=gravity;
+                   birdY-=velocity;
+               }
+           } else{
+               if(Gdx.input.justTouched()){
+                   gameState=1;
+               }
+           }
 
         //Hangi objeleri çizeceğimizi yazıcaz
         batch.begin();
         batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.draw(bird, birdX, birdY, Gdx.graphics.getWidth() / 15, Gdx.graphics.getHeight() / 10);
-
-
         batch.end();
 
     }
